@@ -7,10 +7,9 @@ export default function Page() {
       <div className="flex h-1/5 justify-center items-center mx-auto">
         <h1 className="text-5xl">Welcome to Flash Card App</h1>
       </div>
-      <div className="flex h-3/5 justify-center items-center mx-auto">
-        <Card className="flex flex-col">
-          <p>card content here</p>
-        </Card>
+      <div className="flex flex-col h-3/5 justify-center items-center mx-auto">
+        <Card />
+        <div className="mt-4">navigation here</div>
       </div>
     </div>
   );
