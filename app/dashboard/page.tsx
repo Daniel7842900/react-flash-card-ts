@@ -1,4 +1,5 @@
 import Card from "../components/Card";
+import CardNavigation from "../components/CardNavigation";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -9,7 +10,7 @@ export default function Page() {
       </div>
       <div className="flex flex-col h-3/5 justify-center items-center mx-auto">
         <Card />
-        <div className="mt-4">navigation here</div>
+        <CardNavigation />
       </div>
     </div>
   );
