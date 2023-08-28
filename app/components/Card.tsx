@@ -1,12 +1,41 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Quiz } from "../dashboard/FlashCard";
 
-export default function Card() {
+interface Props {
+  quiz?: Quiz;
+}
+
+export default function Card({ quiz }: Props) {
   const [flip, setFlip] = useState(false);
+  const [answer, setAnswer] = useState("");
+
+  const findAnswer = () => {
+    let answerIndex = 0;
+    if (quiz) {
+      Object.values(quiz.correct_answers).forEach((value, index) => {
+        if (value == "true") {
+          answerIndex = index;
+        }
+      });
+
+      Object.values(quiz.answers).forEach((value, index) => {
+        if (index === answerIndex && value !== null) {
+          setAnswer(value);
+        }
+      });
+    }
+  };
 
   const handleOnClick = () => {
-    setFlip(!flip);
+    if (quiz !== undefined) {
+      setFlip(!flip);
+    }
   };
+
+  useEffect(() => {
+    findAnswer();
+  }, [quiz]);
 
   return (
     <div
@@ -20,26 +49,40 @@ export default function Card() {
         }
       >
         <div className="absolute inset-0">
-          <div className="px-6 py-4">
-            <p className="text-gray-700 text-base font-bold text-xl">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Voluptatibus quia, nulla! Maiores et perferendis eaque,
-              exercitationem praesentium nihil. Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et
-              perferendis eaque, exercitationem praesentium nihil. Lorem ipsum
-              dolor sit amet, consectetur adipisicing elit. Voluptatibus quia,
-              nulla! Maiores et perferendis eaque, exercitationem praesentium
-              nihil.
-            </p>
-          </div>
+          {quiz ? (
+            <div className="px-6 py-4">
+              <p className="text-gray-700 text-base font-bold text-xl">
+                {quiz.question}
+              </p>
+              <br />
+              <ul className="list-disc pl-6 text-xl">
+                {Object.values(quiz.answers).map(
+                  (value, index) => value && <li key={index}>{value}</li>
+                )}
+              </ul>
+            </div>
+          ) : (
+            <div className="px-6 py-4">
+              <p className="text-gray-700 text-base font-bold text-xl">
+                No quiz Available!
+              </p>
+            </div>
+          )}
         </div>
         <div className="absolute inset-0 rounded-lg shadow-lg bg-orange-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-          <div className="px-6 py-4">
-            <p className="text-gray-700 text-base font-bold text-xl">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Voluptatibus quia, nulla! Maiores et perferendis eaque,
-            </p>
-          </div>
+          {quiz ? (
+            <div className="px-6 py-4">
+              <p className="text-gray-700 text-base font-bold text-xl">
+                {answer}
+              </p>
+            </div>
+          ) : (
+            <div className="px-6 py-4">
+              <p className="text-gray-700 text-base font-bold text-xl">
+                No quiz Available!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

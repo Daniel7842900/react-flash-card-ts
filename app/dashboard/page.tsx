@@ -1,5 +1,4 @@
-import Card from "../components/Card";
-import CardNavigation from "../components/CardNavigation";
+import FlashCard from "./FlashCard";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
@@ -9,8 +8,7 @@ export default function Page() {
         <h1 className="text-5xl">Welcome to Flash Card App</h1>
       </div>
       <div className="flex flex-col h-3/5 justify-center items-center mx-auto">
-        <Card />
-        <CardNavigation />
+        <FlashCard />
       </div>
     </div>
   );
