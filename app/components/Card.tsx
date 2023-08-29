@@ -64,7 +64,7 @@ export default function Card({ quiz }: Props) {
           ) : (
             <div className="px-6 py-4">
               <p className="text-gray-700 text-base font-bold text-xl">
-                No quiz Available!
+                No quiz available!
               </p>
             </div>
           )}
@@ -79,7 +79,7 @@ export default function Card({ quiz }: Props) {
           ) : (
             <div className="px-6 py-4">
               <p className="text-gray-700 text-base font-bold text-xl">
-                No quiz Available!
+                No quiz available!
               </p>
             </div>
           )}

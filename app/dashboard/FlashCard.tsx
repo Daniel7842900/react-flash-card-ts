@@ -25,8 +25,8 @@ export interface Quiz {
 
 export default function FlashCard() {
   const [data, setData] = useState<Quiz[]>([]);
-  // const [error, setError] = useState("");
-  // const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
   const [currentCard, setCurrentCard] = useState<Quiz | undefined>();
 
   const fetchQuiz = async () => {
@@ -45,7 +45,10 @@ export default function FlashCard() {
       console.log(jsonResponse);
       setData(jsonResponse);
     } catch (error) {
-      console.log("An error occurred while making a call. ", error);
+      const message =
+        "An error occurred while fetching questions & answers. " + error;
+      console.log(message);
+      setError(message);
     }
   };
 
@@ -58,14 +61,11 @@ export default function FlashCard() {
 
   return (
     <>
-      {currentCard ? (
+      {error && <p className="text-xl">{error}</p>}
+      {currentCard && (
         <>
           <Card quiz={currentCard} />
           <CardNavigation cardLimit={data ? data.length : 0} />
-        </>
-      ) : (
-        <>
-          <Card quiz={currentCard} />
         </>
       )}
     </>
