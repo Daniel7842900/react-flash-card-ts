@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Card from "../../_components/Card";
 import CardNavigation from "../../_components/CardNavigation";
+import useData from "@/app/_hooks/useData";
 
 export interface Quiz {
   question: string;
@@ -24,36 +25,14 @@ export interface Quiz {
 }
 
 export default function FlashCard() {
-  const [data, setData] = useState<Quiz[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  const BASE_URL = "https://quizapi.io/api/v1/questions";
+  const limit = 10;
+  const API_KEY = process.env.NEXT_PUBLIC_QUIZ_API_KEY;
+  const URL = BASE_URL + "?apiKey=" + API_KEY + "&limit=" + limit;
+  const { data, error, isLoading } = useData(URL);
   const [currentCard, setCurrentCard] = useState<Quiz | undefined>();
 
-  const fetchQuiz = async () => {
-    try {
-      const BASE_URL = "https://quizapi.io/api/v1/duestions";
-      const limit = 10;
-      const API_KEY = process.env.NEXT_PUBLIC_QUIZ_API_KEY;
-      const URL = BASE_URL + "?apiKey=" + API_KEY + "&limit=" + limit;
-      const response = await fetch(URL);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error, Status: ${response.status}`);
-      }
-
-      const jsonResponse = await response.json();
-      console.log(jsonResponse);
-      setData(jsonResponse);
-    } catch (error) {
-      const message =
-        "An error occurred while fetching questions & answers. " + error;
-      console.log(message);
-      setError(message);
-    }
-  };
-
   useEffect(() => {
-    fetchQuiz();
     if (data.length > 0) {
       setCurrentCard(data[0]);
     }
