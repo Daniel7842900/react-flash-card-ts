@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import Card from "../_components/Card";
-import CardNavigation from "../_components/CardNavigation";
+import Card from "../../_components/Card";
+import CardNavigation from "../../_components/CardNavigation";
 
 export interface Quiz {
   question: string;
