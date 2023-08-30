@@ -30,6 +30,7 @@ const useData =  (endpoint: string) => {
             .catch((error) => {
                 const message = "There was an error fetching data: " + error;
                 setError(message);
+                setLoading(false);
             });
         }, [])
         
