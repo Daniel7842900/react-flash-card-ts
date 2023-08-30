@@ -4,6 +4,8 @@ import Card from "../../_components/Card";
 import CardNavigation from "../../_components/CardNavigation";
 import useData from "@/app/_hooks/useData";
 import Loading from "@/app/_components/Loading";
+import CardContainer from "@/app/_components/CardContainer";
+import CardSkeleton from "@/app/_components/CardSkeleton";
 
 export interface Quiz {
   question: string;
@@ -26,7 +28,7 @@ export interface Quiz {
 }
 
 export default function FlashCard() {
-  const BASE_URL = "https://quizapi.io/api/v1/questionstt";
+  const BASE_URL = "https://quizapi.io/api/v1/questions";
   const limit = 10;
   const API_KEY = process.env.NEXT_PUBLIC_QUIZ_API_KEY;
   const URL = BASE_URL + "?apiKey=" + API_KEY + "&limit=" + limit;
@@ -42,7 +44,13 @@ export default function FlashCard() {
   return (
     <>
       {error && <p className="text-xl">{error}</p>}
-      {isLoading && <Loading />}
+      {isLoading && (
+        <CardContainer>
+          <CardSkeleton>
+            <Loading />
+          </CardSkeleton>
+        </CardContainer>
+      )}
       {currentCard && (
         <>
           <Card quiz={currentCard} />
