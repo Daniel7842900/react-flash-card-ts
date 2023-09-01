@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Quiz } from "../(routes)/dashboard/FlashCard";
+import { Quiz } from "@/app/_hooks/useQuiz";
 
 interface Props {
   quiz?: Quiz;

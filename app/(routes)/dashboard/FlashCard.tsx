@@ -10,12 +10,27 @@ import useQuiz, { Quiz } from "@/app/_hooks/useQuiz";
 export default function FlashCard() {
   const { data, error, isLoading } = useQuiz();
   const [currentCard, setCurrentCard] = useState<Quiz | undefined>();
+  const [currentIdx, setCurrentIdx] = useState<number>(1);
 
   useEffect(() => {
     if (data.length > 0) {
       setCurrentCard(data[0]);
     }
   }, [data]);
+
+  const handleOnPrevious = () => {
+    if (currentIdx > 1) {
+      setCurrentIdx(currentIdx - 1);
+      setCurrentCard(data[currentIdx - 2]);
+    }
+  };
+
+  const handleOnNext = () => {
+    if (currentIdx < data.length) {
+      setCurrentIdx(currentIdx + 1);
+      setCurrentCard(data[currentIdx]);
+    }
+  };
 
   return (
     <>
@@ -31,7 +46,12 @@ export default function FlashCard() {
         <>
           <CardContainer>
             <Card quiz={currentCard} />
-            <CardNavigation cardLimit={data ? data.length : 0} />
+            <CardNavigation
+              cardLimit={data ? data.length : 0}
+              currentIdx={currentIdx}
+              handleOnPrevious={handleOnPrevious}
+              handleOnNext={handleOnNext}
+            />
           </CardContainer>
         </>
       )}

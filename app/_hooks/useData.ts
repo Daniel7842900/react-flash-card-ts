@@ -30,7 +30,6 @@ const useData = <T>(endpoint: string) => {
         const message = "There was an error fetching data: " + error;
         setError(message);
         setLoading(false);
-        return;
       });
 
     return () => controller.abort();
