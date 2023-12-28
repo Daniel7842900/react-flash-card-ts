@@ -2,24 +2,29 @@
 import { useEffect, useState } from "react";
 import { Quiz } from "@/app/_hooks/useQuiz";
 
-interface Props {
-  quiz?: Quiz;
+export interface ICard {
+  quiz?: Quiz,
+  flipped: boolean
 }
 
-export default function Card({ quiz }: Props) {
-  const [flip, setFlip] = useState(false);
+interface Props {
+  quiz?: Quiz;
+  handleOnClickFlip: (isFlipped: boolean) => void;
+}
+
+export default function Card({ card, handleOnClickFlip }: Props) {
   const [answer, setAnswer] = useState("");
 
   const findAnswer = () => {
     let answerIndex = 0;
-    if (quiz) {
-      Object.values(quiz.correct_answers).forEach((value, index) => {
+    if (card) {
+      Object.values(card.quiz.correct_answers).forEach((value, index) => {
         if (value == "true") {
           answerIndex = index;
         }
       });
 
-      Object.values(quiz.answers).forEach((value, index) => {
+      Object.values(card.quiz.answers).forEach((value, index) => {
         if (index === answerIndex && value !== null) {
           setAnswer(value);
         }
@@ -28,14 +33,14 @@ export default function Card({ quiz }: Props) {
   };
 
   const handleOnClick = () => {
-    if (quiz !== undefined) {
-      setFlip(!flip);
+    if (card.quiz !== undefined) {
+      handleOnClickFlip(!card.flipped);
     }
   };
 
   useEffect(() => {
     findAnswer();
-  }, [quiz]);
+  }, [card]);
 
   return (
     <div
@@ -45,18 +50,18 @@ export default function Card({ quiz }: Props) {
       <div
           className={
               "relative w-full h-full transition-all rounded-lg shadow-lg bg-orange-200 duration-500 [transform-style:preserve-3d] [backface-visibility:hidden] " +
-              (flip ? "[transform:rotateY(180deg)]" : "")
+              (card.flipped ? "[transform:rotateY(180deg)]" : "")
           }
       >
         <div className="absolute inset-0 overflow-y-auto">
-          {quiz ? (
+          {card ? (
             <div className="px-6 py-4">
               <p className="text-gray-700 text-base font-bold text-xl">
-                {quiz.question}
+                {card.quiz.question}
               </p>
               <br />
               <ul className="list-disc pl-6 text-xl">
-                {Object.values(quiz.answers).map(
+                {Object.values(card.quiz.answers).map(
                   (value, index) => value && <li key={index}>{value}</li>
                 )}
               </ul>
@@ -70,7 +75,7 @@ export default function Card({ quiz }: Props) {
           )}
         </div>
         <div className="absolute inset-0 rounded-lg shadow-lg bg-orange-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-          {quiz ? (
+          {card ? (
             <div className="px-6 py-4">
               <p className="text-gray-700 text-base font-bold text-xl">
                 {answer}
