@@ -39,16 +39,16 @@ export default function Card({ quiz }: Props) {
 
   return (
     <div
-      className="flex flex-col overflow-hidden w-80 h-96 rounded-lg justify-center items-center [perspective:1000px]"
+      className="flex flex-col w-80 h-96 rounded-lg justify-center items-center [perspective:1000px]"
       onClick={handleOnClick}
     >
       <div
-        className={
-          "relative w-full h-full transition-all rounded-lg shadow-lg bg-orange-200 duration-500 [transform-style:preserve-3d] [backface-visibility:hidden] " +
-          (flip ? "[transform:rotateY(180deg)]" : "")
-        }
+          className={
+              "relative w-full h-full transition-all rounded-lg shadow-lg bg-orange-200 duration-500 [transform-style:preserve-3d] [backface-visibility:hidden] " +
+              (flip ? "[transform:rotateY(180deg)]" : "")
+          }
       >
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-y-auto">
           {quiz ? (
             <div className="px-6 py-4">
               <p className="text-gray-700 text-base font-bold text-xl">
